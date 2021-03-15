@@ -20,8 +20,8 @@ const ProgressBar = ({ value, size }) => {
 const Background = styled.div`
   --border-radius: 4px;
   background-color: ${COLORS.transparentGray15};
+  box-shadow: inset 0 2px 4px \\${COLORS.transparentGray35};
   border-radius: var(--border-radius);
-  width: 370px;
   ${p => backgroundSizes[p.size] || defaultSize}
 `
 const backgroundSizes = {
@@ -32,8 +32,9 @@ const backgroundSizes = {
     height: 12px;
   `,
   large: css`
-    height: 24px;
+    height: 16px;
     padding: 4px;
+    --border-radius: 8px;
   `
 }
 const defaultSize = backgroundSizes.medium
@@ -54,7 +55,8 @@ function valueToBorderRadius(value) {
   }
 
   if (value < 100) {
-    return 'calc(var(--border-radius) / 2)'
+    const fraction = value - 99
+    return `calc(var(--border-radius) * ${fraction})`
   }
 
   return 'inherit'
